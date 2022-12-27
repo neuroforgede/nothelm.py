@@ -1,14 +1,35 @@
 # This is nothelm.py
 
-Don't compare this to Kubernetes Helm (just yet).
+Don't compare this to Kubernetes Helm (just yet?).
 
 This is a templating engine meant to be used with Docker Stacks with a similar (not equal) experience to
 installing Helm Charts in Kubernetes.
 
 # Install
 
-```
+```bash
 pip3 install https://github.com/s4ke/nothelm.py/archive/refs/heads/master.zip
+```
+
+# Usage
+
+nothelm.py works different to Helm. This is why the main command is not called `install` for now.
+It currently only supports `deploy`.
+
+```bash
+nothelm deploy --values=test_values/values.yaml -p project
+```
+
+# Project Structure
+
+nothelm.py currently supports the following structure:
+
+```
+├── project
+│   ├── templates
+│   │   ├── deploy.sh           # required, main entrypoint of your deployments
+│   │   └── sample-stack.yml    # your deployment template data goes here
+│   └── values.yaml             # default values for use in the templates
 ```
 
 # Why?
