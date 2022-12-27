@@ -3,7 +3,7 @@ import os
 import tempfile
 import shutil
 from typing import List, Optional
-from nothelm.lib.template import load_values, template_project, merge, call_deploy
+from nothelm.lib.template import load_values, template_project, merge, call_run
 
 @click.group()
 def cli() -> None:
@@ -73,7 +73,7 @@ def deploy(
             template_project(project, target_dir, merge(values_loaded), all_files_as_template, strip_template_file_endings)
 
         if not dry_run:
-            call_deploy(target_dir)
+            call_run(target_dir)
     finally:
         if _temp_dir is not None:
             _temp_dir.cleanup()

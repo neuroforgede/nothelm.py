@@ -82,7 +82,7 @@ def template_project(
     )
 
 
-def call_deploy(base_dir: str) -> None:
+def call_run(base_dir: str) -> None:
     """
     by convention we enforce a run.sh script.
     This can include arbitrary other tooling that you need
