@@ -8,7 +8,7 @@ installing Helm Charts in Kubernetes.
 # Install
 
 ```
-pip3 install https://github.com/s4ke/nothelm.py
+pip3 install https://github.com/s4ke/nothelm.py/archive/refs/heads/master.zip
 ```
 
 # Why?
