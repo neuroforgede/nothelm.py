@@ -16,4 +16,4 @@ services:
         order: stop-first
         parallelism: 1
     ports:
-      - 8899:80
+      - {{ outside_port }}:80
