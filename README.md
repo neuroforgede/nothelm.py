@@ -3,7 +3,7 @@
 Don't compare this to Kubernetes Helm (just yet?).
 
 This is a templating engine meant to be used with Docker Stacks with a similar (not equal) experience to
-installing Helm Charts in Kubernetes.
+installing Helm Charts in Kubernetes with regards to templating support.
 
 # Install
 
