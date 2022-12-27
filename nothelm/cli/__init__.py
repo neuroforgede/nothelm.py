@@ -17,12 +17,17 @@ def cli() -> None:
 @click.option('-p', '--project-dir', type=click.STRING, required=True, multiple=True)
 @click.option('-t', '--target-dir', type=click.STRING, required=False)
 @click.option('-f', '--values', type=click.STRING, required=False, multiple=True)
+@click.option('--dry-run',
+    default=False,
+    help='whether to do a dry-run. A dry-run skips executing the deployment.',
+    is_flag=True)
 @click.option('-v', '--verbose', count=True)
 def deploy(
     project_dir: List[str],
     target_dir: Optional[str],
     values: List[str],
-    verbose: int
+    verbose: int,
+    dry_run: bool
 ) -> None:
     """
     deploy a project
@@ -54,7 +59,8 @@ def deploy(
         for project in project_dir:
             template_project(project, target_dir, merge(values_loaded))
 
-        call_deploy(target_dir)
+        if not dry_run:
+            call_deploy(target_dir)
     finally:
         if _temp_dir is not None:
             _temp_dir.cleanup()
