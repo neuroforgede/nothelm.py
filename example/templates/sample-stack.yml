@@ -1,0 +1,19 @@
+version: "3.8"
+
+services:
+  hello:
+    image: nginxdemos/hello
+{% raw %}
+    hostname: "hello-{{ .Task.Slot }}"
+{% endraw %}
+    deploy:
+      mode: replicated
+      replicas: {{ replica_count }}
+      update_config:
+        order: stop-first
+        parallelism: 1
+      rollback_config:
+        order: stop-first
+        parallelism: 1
+    ports:
+      - 8899:80
