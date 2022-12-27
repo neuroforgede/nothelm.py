@@ -20,6 +20,21 @@ It currently only supports `deploy`.
 nothelm deploy --values=test_values/values.yaml -p project
 ```
 
+The actual usage can be looked up via help and may change in future versions:
+
+```
+nothelm --help
+Usage: nothelm [OPTIONS] COMMAND [ARGS]...
+
+  nothelm.py
+
+Options:
+  --help  Show this message and exit.
+
+Commands:
+  deploy  deploy a project
+```
+
 # Project Structure
 
 nothelm.py currently supports the following structure:
