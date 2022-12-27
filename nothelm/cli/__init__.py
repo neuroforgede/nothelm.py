@@ -15,6 +15,15 @@ def cli() -> None:
 
 @click.command()
 @click.option('-p', '--project-dir', type=click.STRING, required=True, multiple=True)
+@click.option('--all-files-as-template', default=False, help="""
+    whether to treat all files inside the templates/ folder as a template.
+    By default only files ending in .j2/.jinja2 are treated as templates
+    """,
+    is_flag=True
+)
+@click.option('--strip-template-file-endings/--no-strip-template-file-endings', default=None, is_flag=True, 
+    help='defaults to --strip-template-file-endings, if --all-files-as-template is set, this defaults to --no-strip-template-file-endings',
+    callback=lambda c, p, v: v if v is not None else not c.params['all_files_as_template'])
 @click.option('-t', '--target-dir', type=click.STRING, required=False)
 @click.option('-f', '--values', type=click.STRING, required=False, multiple=True)
 @click.option('--dry-run',
@@ -27,7 +36,9 @@ def deploy(
     target_dir: Optional[str],
     values: List[str],
     verbose: int,
-    dry_run: bool
+    dry_run: bool,
+    all_files_as_template: bool,
+    strip_template_file_endings: bool
 ) -> None:
     """
     deploy a project
@@ -37,7 +48,6 @@ def deploy(
     - To override files in a project you can specify --project-dir/-p multiple times
     - To override values multiple times, you can specify --values/-f multiple times
     """
-
     values_loaded = list(map(load_values, values))
 
     _use_temp_dir = target_dir is None
@@ -57,7 +67,7 @@ def deploy(
             shutil.rmtree(target_dir, ignore_errors=True)
 
         for project in project_dir:
-            template_project(project, target_dir, merge(values_loaded))
+            template_project(project, target_dir, merge(values_loaded), all_files_as_template, strip_template_file_endings)
 
         if not dry_run:
             call_deploy(target_dir)
