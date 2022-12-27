@@ -8,7 +8,7 @@ installing Helm Charts in Kubernetes.
 # Install
 
 ```bash
-pip3 install https://github.com/s4ke/nothelm.py/archive/refs/heads/master.zip
+pip3 install https://github.com/neuroforgede/nothelm.py/archive/refs/heads/master.zip
 ```
 
 # Usage
