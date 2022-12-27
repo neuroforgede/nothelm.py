@@ -84,14 +84,14 @@ def template_project(
 
 def call_deploy(base_dir: str) -> None:
     """
-    by convention we enforce a deploy.sh script.
+    by convention we enforce a run.sh script.
     This can include arbitrary other tooling that you need
     to call when deploying things
     """
     subprocess.check_call(
         [
             "/bin/bash",
-            "deploy.sh"
+            "run.sh"
         ],
         env={
             **os.environ,
