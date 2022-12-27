@@ -22,7 +22,10 @@ def cli() -> None:
     is_flag=True
 )
 @click.option('--strip-template-file-endings/--no-strip-template-file-endings', default=None, is_flag=True, 
-    help='defaults to --strip-template-file-endings, if --all-files-as-template is set, this defaults to --no-strip-template-file-endings',
+    help="""
+    wether to strip template file endings (.j2/.jinja2) defaults to --strip-template-file-endings, 
+    if --all-files-as-template is set, this defaults to --no-strip-template-file-endings.
+    """,
     callback=lambda c, p, v: v if v is not None else not c.params['all_files_as_template'])
 @click.option('-t', '--target-dir', type=click.STRING, required=False)
 @click.option('-f', '--values', type=click.STRING, required=False, multiple=True)
