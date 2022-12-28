@@ -3,7 +3,7 @@ import os
 import tempfile
 import shutil
 from typing import List, Optional
-from nothelm.lib.template import load_values, template_project, merge, call_run
+from nothelm.lib.template import load_values, template_project, merge, call_command
 
 @click.group()
 def cli() -> None:
@@ -31,20 +31,22 @@ def cli() -> None:
 @click.option('-f', '--values', type=click.STRING, required=False, multiple=True)
 @click.option('--dry-run',
     default=False,
-    help='whether to do a dry-run. A dry-run skips executing the deployment.',
+    help='whether to do a dry-run. A dry-run skips executing the command.',
     is_flag=True)
 @click.option('-v', '--verbose', count=True)
-def deploy(
+@click.argument('command', type=click.STRING, required=True)
+def run(
     project_dir: List[str],
     target_dir: Optional[str],
     values: List[str],
     verbose: int,
     dry_run: bool,
     all_files_as_template: bool,
-    strip_template_file_endings: bool
+    strip_template_file_endings: bool,
+    command: str
 ) -> None:
     """
-    deploy a project
+    run a command in a project
 
     Notes:
 
@@ -73,9 +75,9 @@ def deploy(
             template_project(project, target_dir, merge(values_loaded), all_files_as_template, strip_template_file_endings)
 
         if not dry_run:
-            call_run(target_dir)
+            call_command(target_dir + '/templates', command)
     finally:
         if _temp_dir is not None:
             _temp_dir.cleanup()
 
-cli.add_command(deploy)
+cli.add_command(run)

@@ -42,13 +42,21 @@ def template_project(
 
     This is so that we can merge multiple project folders into one
     """
-
-    source_dir = project_dir + '/templates'
-
     default_values = load_values(f'{project_dir}/values.yaml')
     values = merge_single(default_values, custom_values)
 
-    environment = Environment(loader=FileSystemLoader(source_dir), undefined=StrictUndefined)
+    template_dir(project_dir + '/templates', target_dir + '/templates', all_files_as_template, strip_template_file_endings, values)
+    template_dir(project_dir + '/commands', target_dir + '/commands', all_files_as_template, strip_template_file_endings, values)
+
+
+def template_dir(
+    src_dir: str,
+    dest_dir: str,
+    all_files_as_template: bool,
+    strip_template_file_endings: bool,
+    values: Dict[str, Any]
+) -> None:
+    environment = Environment(loader=FileSystemLoader(src_dir), undefined=StrictUndefined)
 
     def copy_template(src: str, dest: str) -> None:
         def opener(path, flags):
@@ -58,7 +66,7 @@ def template_project(
         needs_templating = all_files_as_template or is_jinja
 
         if needs_templating:
-            relative_path = os.path.relpath(src, source_dir)
+            relative_path = os.path.relpath(src, src_dir)
             template = environment.get_template(relative_path)
 
             # if the file was a template file (ending with .j2/.jinja2 we might have to strip the ending)
@@ -75,23 +83,23 @@ def template_project(
             shutil.copy2(src, dest)
 
     shutil.copytree(
-        src=source_dir,
-        dst=target_dir,
+        src=src_dir,
+        dst=dest_dir,
         copy_function=copy_template,
         dirs_exist_ok=True
     )
 
 
-def call_run(base_dir: str) -> None:
+def call_command(base_dir: str, command: str) -> None:
     """
-    by convention we enforce a run.sh script.
+    by convention we enforce commands to be scripts that live in the commands folder.
     This can include arbitrary other tooling that you need
     to call when deploying things
     """
     subprocess.check_call(
         [
             "/bin/bash",
-            "run.sh"
+            f"../commands/{command}.sh"
         ],
         env={
             **os.environ,

@@ -41,8 +41,9 @@ nothelm.py currently supports the following structure:
 
 ```
 ├── project
-│   ├── templates
-│   │   ├── run.sh(.j2)          # required, main entrypoint of your deployments
+│   ├── commands
+│   │   ├── deploy.sh.j2            # commands to run on your deployment
+│   ├── templates   
 │   │   └── sample-stack.yml.j2     # your deployment template data goes here
 │   └── values.yaml                 # default values for use in the templates
 ```
