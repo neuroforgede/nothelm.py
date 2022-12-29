@@ -42,11 +42,19 @@ def template_project(
 
     This is so that we can merge multiple project folders into one
     """
-    default_values = load_values(f'{project_dir}/values.yaml')
+
+    if os.path.exists(f'{project_dir}/values.yaml'):
+        default_values = load_values(f'{project_dir}/values.yaml')
+    else:
+        default_values = dict()
+    
     values = merge_single(default_values, custom_values)
 
-    template_dir(project_dir + '/templates', target_dir + '/templates', all_files_as_template, strip_template_file_endings, values)
-    template_dir(project_dir + '/commands', target_dir + '/commands', all_files_as_template, strip_template_file_endings, values)
+    if os.path.exists(project_dir + '/templates'):
+        template_dir(project_dir + '/templates', target_dir + '/templates', all_files_as_template, strip_template_file_endings, values)
+
+    if os.path.exists(project_dir + '/commands'):
+        template_dir(project_dir + '/commands', target_dir + '/commands', all_files_as_template, strip_template_file_endings, values)
 
 
 def template_dir(
