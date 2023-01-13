@@ -48,6 +48,10 @@ nothelm.py currently supports the following structure:
 │   └── values.yaml                 # default values for use in the templates
 ```
 
+# Where can I find charts?
+
+You can find charts here: https://github.com/neuroforgede/nothelm-charts . Since we don't have any concept of packaging defined yet, you will have to vendor these files into your own repository.
+
 # Why?
 
 Override files in Docker Stacks are fine, but not enough. This project aims to have a fully templateable
