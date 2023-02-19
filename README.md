@@ -13,11 +13,11 @@ pip3 install https://github.com/neuroforgede/nothelm.py/archive/refs/heads/maste
 
 # Usage
 
-nothelm.py works different to Helm. This is why the main command is not called `install` for now.
-It currently only supports `deploy`.
+nothelm.py works different to Helm. Commands are implemented as arbitrary bash scripts in a special commands folder.
+A `deploy` command would be executed as follows:
 
 ```bash
-nothelm deploy --values=test_values/values.yaml -p project
+nothelm run deploy --values=test_values/values.yaml -p project
 ```
 
 The actual usage can be looked up via help and may change in future versions:
@@ -32,7 +32,7 @@ Options:
   --help  Show this message and exit.
 
 Commands:
-  deploy  deploy a project
+  run  runs a command
 ```
 
 # Project Structure
