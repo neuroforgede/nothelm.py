@@ -17,7 +17,7 @@ nothelm.py works different to Helm. Commands are implemented as arbitrary bash s
 A `deploy` command would be executed as follows:
 
 ```bash
-nothelm run deploy --values=test_values/values.yaml -p project
+nothelm run --values=test_values/values.yaml -p project deploy
 ```
 
 The actual usage can be looked up via help and may change in future versions:
