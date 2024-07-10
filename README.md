@@ -13,7 +13,7 @@ pip3 install https://github.com/neuroforgede/nothelm.py/archive/refs/heads/maste
 
 # Usage
 
-nothelm.py works different to Helm. Commands are implemented as arbitrary bash scripts in a special commands folder.
+nothelm.py works differently to Helm. Commands are implemented as arbitrary bash scripts in a special commands folder.
 A `deploy` command would be executed as follows:
 
 ```bash
