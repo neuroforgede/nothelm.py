@@ -14,7 +14,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 setuptools.setup(
     name="nothelm.py",
     scripts=["bin/nothelm"],
-    version="0.2.2",
+    version="0.2.3",
     author="NeuroForge GmbH & Co. KG",
     author_email="kontakt@neuroforge.de",
     description="nothelm.py",
