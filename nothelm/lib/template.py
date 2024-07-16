@@ -50,7 +50,7 @@ def load_values(path: str) -> Dict[str, Any]:
         if not isinstance(variables, dict):
             raise ValueError(f"file at {path} did not contain a YAML dictionary at top level")
         
-        if path.endswith('.j2'):
+        if path.endswith('.j2') or path.endswith('.jinja2'):
             variables = interpolate_env_vars_recursively(variables)
         
         return variables
