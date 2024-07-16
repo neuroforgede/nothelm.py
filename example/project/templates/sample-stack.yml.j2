@@ -6,6 +6,8 @@ services:
 {% raw %}
     hostname: "hello-{{ .Task.Slot }}"
 {% endraw %}
+    environment:
+      - "SOME_HOME={{ home_dir }}"
     deploy:
       mode: replicated
       replicas: {{ replica_count }}
