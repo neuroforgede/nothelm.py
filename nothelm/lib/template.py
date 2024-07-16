@@ -7,6 +7,39 @@ import yaml
 import subprocess
 from functools import reduce
 
+def interpolate_env_vars_recursively(values: Dict[str, Any]) -> Dict[str, Any]:
+    def interpolate(value: Any) -> Any:
+        if isinstance(value, dict):
+            return interpolate_dict(value)
+        elif isinstance(value, list):
+            return interpolate_list(value)
+        elif isinstance(value, str):
+            return interpolate_string(value)
+        else:
+            return value
+
+    def interpolate_dict(d: Dict[str, Any]) -> Dict[str, Any]:
+        return {key: interpolate(value) for key, value in d.items()}
+
+    def interpolate_list(l: List[Any]) -> List[Any]:
+        return [interpolate(value) for value in l]
+    
+    # expand environment variables, they are available in "jinja" format {{ nothelm.env.VARIABLE_NAME }}
+    def interpolate_jinja(s: str) -> str:
+        env = Environment()
+        template = env.from_string(s)
+        return template.render(nothelm={"env": os.environ})
+
+    def interpolate_string(s: str) -> str:
+        # check if we need to interpolate the string
+        if "{{" in s:
+            return interpolate_jinja(s)
+
+        return os.path.expandvars(s)
+
+    return interpolate_dict(values)
+
+
 def load_values(path: str) -> Dict[str, Any]:
     with open(path, "r") as stream:
         variables = yaml.safe_load(stream)
@@ -16,6 +49,8 @@ def load_values(path: str) -> Dict[str, Any]:
 
         if not isinstance(variables, dict):
             raise ValueError(f"file at {path} did not contain a YAML dictionary at top level")
+
+        variables = interpolate_env_vars_recursively(variables)
         
         return variables
 
