@@ -81,6 +81,8 @@ def template_project(
 
     if os.path.exists(f'{project_dir}/values.yaml'):
         default_values = load_values(f'{project_dir}/values.yaml')
+    elif os.path.exists(f'{project_dir}/values.yaml.j2'):
+        default_values = load_values(f'{project_dir}/values.yaml.j2')
     else:
         default_values = dict()
     
